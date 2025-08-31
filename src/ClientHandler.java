@@ -3,7 +3,6 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 public class ClientHandler implements Runnable{
-
     public static ArrayList<ClientHandler> clientHandlers = new ArrayList<>();
     private Socket socket;
     private BufferedReader bufferedReader;
@@ -18,7 +17,7 @@ public class ClientHandler implements Runnable{
             this.clientUsername = bufferedReader.readLine();
             clientHandlers.add(this);
 
-            broadcastMessage("SERVER: " + clientUsername + " has entered the chat");
+            broadcastMessage( "SERVER: " + clientUsername + " has entered the chat");
         } catch (IOException e) {
             closeEverything(socket, bufferedReader ,bufferedWriter);
         }
@@ -42,7 +41,7 @@ public class ClientHandler implements Runnable{
     public void broadcastMessage(String messageToSend) {
         for (ClientHandler clientHandler : clientHandlers) {
             try {
-                if (!clientHandler.clientUsername.equals(clientHandler)) {
+                if (!clientHandler.clientUsername.equals(clientUsername)) {
                     clientHandler.bufferedWriter.write(messageToSend);
                     clientHandler.bufferedWriter.newLine();
                     clientHandler.bufferedWriter.flush();
